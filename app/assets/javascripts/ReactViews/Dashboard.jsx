@@ -5,6 +5,7 @@ import LineChart from 'ReactViews/LineChart.jsx';
 import BarChart from 'ReactViews/BarChart.jsx';
 import PieChart from 'ReactViews/PieChart.jsx';
 import DonutChart from 'ReactViews/DonutChart.jsx';
+import GaugeChart from 'ReactViews/GaugeChart.jsx';
 
 
 const dummyData = {columns: [
@@ -18,17 +19,28 @@ const dummyDataPie = {
             ["data2", 1.4, 1.5, 1.5, 1.3, 1.5, 1.3, 1.6, 1.0, 1.3, 1.4, 1.0, 1.5, 1.0, 1.4, 1.3, 1.4, 1.5, 1.0, 1.5, 1.1, 1.8, 1.3, 1.5, 1.2, 1.3, 1.4, 1.4, 1.7, 1.5, 1.0, 1.1, 1.0, 1.2, 1.6, 1.5, 1.6, 1.5, 1.3, 1.3, 1.3, 1.2, 1.4, 1.2, 1.0, 1.3, 1.2, 1.3, 1.3, 1.1, 1.3],
             ["data3", 2.5, 1.9, 2.1, 1.8, 2.2, 2.1, 1.7, 1.8, 1.8, 2.5, 2.0, 1.9, 2.1, 2.0, 2.4, 2.3, 1.8, 2.2, 2.3, 1.5, 2.3, 2.0, 2.0, 1.8, 2.1, 1.8, 1.8, 1.8, 2.1, 1.6, 1.9, 2.0, 2.2, 1.5, 1.4, 2.3, 2.4, 1.8, 1.8, 2.1, 2.4, 2.3, 1.9, 2.3, 2.5, 2.3, 1.9, 2.0, 2.3, 1.8],
         ]}
+const dummyDataGauge = {
+        columns: [
+            ['data', 60]
+        ]}
 
 const Dashboard = React.createClass({
     render() {
         return (<div className='container clearfix'>
                 <div className='col md-col-6 sm-col-12'>
                     <LineChart classNames={'widget'} data={dummyData} />
-                    <BarChart classNames={'widget'} data={dummyData} />
                 </div>
                 <div className='col md-col-6 sm-col-12'>
                     <PieChart classNames={'widget'} data={dummyDataPie} />
+                </div>
+                <div className='col md-col-6 sm-col-12'>
+                    <BarChart classNames={'widget'} data={dummyData} />
+                </div>
+                <div className='col md-col-6 sm-col-12'>
                     <DonutChart classNames={'widget'} data={dummyDataPie} />
+                </div>
+                <div className='col md-col-6 sm-col-12'>
+                    <GaugeChart classNames={'widget'} data={dummyDataGauge} />
                 </div>
                 </div>);
     }
