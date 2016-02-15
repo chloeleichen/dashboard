@@ -1,42 +1,54 @@
-var BarChart = React.createClass({
-  propTypes: {
-    barData: React.PropTypes.object.isRequired
-  },
+import React from 'react';
+import c3 from 'c3';
 
-  componentDidMount: function() {
-    this.update();
-  },
+const BarChart = React.createClass({
+    // this._element is updated by the ref callback attribute, https://facebook.github.io/react/docs/more-about-refs.html
+    _element: undefined,
 
-  componentDidUpdate: function() {
-    this.update();
-  },
+    _barChart: undefined,
 
-  update: function() {
-    var colours = this.props.barData.colours.sort(function(a, b) { return a.min_value - b.min_value; });
-    var colourScale = d3.scale.threshold()
-      .domain(colours.filter(function(d) { return d.min_value; }).map(function(d) { return d.min_value; }))
-      .range(colours.map(function(d) { return d.colour; }));
-    var data = this.props.barData.value;
+    _renderChart(data){
+        this._barChart = c3.generate({
+            bindto: this._element,
+            data: {
+                columns: [],
+                type: 'bar'
+            },
+            bar: {
+                width: {
+                    ratio: 0.5 // this makes bar width 50% of length between ticks
+                }
+            }
+          });
+    },
 
-    var xFormat = d3.time.format.iso;
-    data.forEach(function(datum) {
-      datum[0] = xFormat.parse(datum[0]);
-    });
+    propTypes: {
+        colors: React.PropTypes.array,
+        data: React.PropTypes.object,
+        height: React.PropTypes.number
+    },
 
-    var barChart = BarChartGenerator().colour(colourScale).autoWidth(true).height(35);
+    componentDidMount() {
+        this._renderChart();
+        if (this.props.data) {
+            this._barChart.load(this.props.data);
+        }
+    },
 
-    if(this.props.maxY) {
-      barChart.yDomain([0, this.props.maxY]);
+    componentDidUpdate() {
+        this._barChart.load(this.props.data);
+    },
+
+
+    componentWillUnmount() {
+        this._barChart.destroy();
+    },
+
+    render() {
+        return (
+            <div className={this.props.classNames} ref={element=>{this._element = element;}}></div>
+        );
     }
-
-    d3.select(this.refs.svg.getDOMNode()).datum(data).call(barChart);
-  },
-
-  render: function() {
-    return (
-      <svg ref="svg" />
-    );
-  }
 });
 
 module.exports = BarChart;

@@ -1,10 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Dashboard from 'ReactViews/Dashboard.jsx';
 
-const Test = React.createClass({
-  render: function() {
-    return <div>Hello {this.props.name}</div>;
-  }
-});
 
-ReactDOM.render(<Test name="John" />, document.getElementById('main'));
+ReactDOM.render(<Dashboard />, document.getElementById('main'));

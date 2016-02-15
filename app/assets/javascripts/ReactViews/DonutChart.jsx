@@ -1,17 +1,24 @@
 import React from 'react';
 import c3 from 'c3';
 
-const LineChart = React.createClass({
+const DonutChart = React.createClass({
     // this._element is updated by the ref callback attribute, https://facebook.github.io/react/docs/more-about-refs.html
     _element: undefined,
 
-    _lineChart: undefined,
+    _donutChart: undefined,
 
     _renderChart(data) {
-        this._lineChart = c3.generate({
+        this._donutChart = c3.generate({
             bindto: this._element,
             data: {
-                columns: []
+                columns: [],
+                type : 'donut',
+                onclick: (d, i)=>{ console.log("onclick"); },
+                onmouseover: (d, i)=>{ console.log("onmouseover"); },
+                onmouseout: (d, i)=>{ console.log("onmouseout"); }
+            },
+            donut: {
+                title: "dummy donut"
             }
           });
     },
@@ -25,16 +32,16 @@ const LineChart = React.createClass({
     componentDidMount() {
         this._renderChart();
         if (this.props.data) {
-            this._lineChart.load(this.props.data);
+            this._donutChart.load(this.props.data);
         }
     },
 
     componentDidUpdate() {
-        this._lineChart.load(this.props.data);
+        this._donutChart.load(this.props.data);
     },
 
     componentWillUnmount() {
-        this._lineChart.destroy();
+        this._donutChart.destroy();
     },
 
     render() {
@@ -44,4 +51,4 @@ const LineChart = React.createClass({
     }
 });
 
-module.exports = LineChart;
+module.exports = DonutChart;
