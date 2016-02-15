@@ -11,8 +11,8 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var HelloMessage = _react2.default.createClass({
-  displayName: 'HelloMessage',
+var Test = _react2.default.createClass({
+  displayName: 'Test',
 
   render: function render() {
     return _react2.default.createElement(
@@ -24,7 +24,7 @@ var HelloMessage = _react2.default.createClass({
   }
 });
 
-_reactDom2.default.render(_react2.default.createElement(HelloMessage, { name: 'John' }), document.getElementById('main'));
+_reactDom2.default.render(_react2.default.createElement(Test, { name: 'John' }), document.getElementById('main'));
 
 },{"react":159,"react-dom":3}],2:[function(require,module,exports){
 // shim for using process in browser

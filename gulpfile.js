@@ -20,7 +20,13 @@ var jsSource = {
     entry: './app/assets/javascripts/index.es6',
     build: 'index.js',
     dest: './build/assets/javascripts',
-    watch: './app/assets/javascripts/*.es6'
+    watch: ['./app/assets/javascripts/*.es6',
+            './app/assets/javascripts/*.js',
+            './app/assets/javascripts/*.jsx',
+            './app/assets/javascripts/*/*.js',
+            './app/assets/javascripts/*/*.es6',
+            './app/assets/javascripts/*/*.jsx'
+            ]
   },
   test: {
     name: 'test',
@@ -43,7 +49,7 @@ function handleErrors() {
 function jsTask(env) {
   gulp.task(env.name, function taskGen() {
     return (
-    browserify({entries: env.entry, extensions: ['.es6'], debug: true, paths: ['./node_modules', './app/assets/javascripts/']})
+    browserify({entries: env.entry, extensions: ['.es6', '.js', '.jsx'], debug: true, paths: ['./node_modules', './app/assets/javascripts/']})
     .transform(babelify, {presets: ['es2015', 'react']})
     .bundle()
     .on('error', handleErrors)
@@ -79,6 +85,10 @@ gulp.task('watch', ['dev', 'test'], function gulpWatch() {
   gulp.watch(jsSource.dev.watch, [jsSource.dev.name]);
   gulp.watch(jsSource.test.watch, [jsSource.test.name]);
   gulp.watch(sassGlob, ['sass']);
+});
+
+gulp.task('watch-dev', ['dev'], function gulpWatch() {
+  gulp.watch(jsSource.dev.watch, [jsSource.dev.name]);
 });
 
 gulp.task('default', ['watch']);
